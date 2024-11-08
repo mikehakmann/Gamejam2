@@ -12,29 +12,20 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public GameObject world;
 
-
     private float OrignalCameraZoom = 2.83f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         gameState = GameState.Midgard;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    [ContextMenu("ChangeGameState")] 
+    [ContextMenu("ChangeGameState")]
     public void ChangeGameState()
     {
-
         if (gameState == GameState.Midgard)
         {
             gameState = GameState.Helheims;
-        Debug.Log("Changing gamestate to " + gameState);
+            Debug.Log("Changing gamestate to " + gameState);
             StartCoroutine(ChangeWorld(GameState.Helheims));
         }
         else
@@ -42,71 +33,76 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Midgard;
             Debug.Log("Changing gamestate to " + gameState);
             StartCoroutine(ChangeWorld(GameState.Midgard));
-
         }
     }
 
-
-    /*<summary>
-     * Start fly up anim
-     * Zoom out 
-     * rotate world
-     * Zoom in
-     * Start Fly down anim
-     * execute ChangeGameState
-     * excute spawn upgrades and stairway
-     * </summary>
-     */
-    private IEnumerator ChangeWorld(GameState gameState)
+    private IEnumerator ChangeWorld(GameState targetGameState)
     {
-        Debug.Log("Changing world to " + gameState);
-        // Start fly-up animation
+        Debug.Log("Changing world to " + targetGameState);
+        // Start fly-up animation'
+
         yield return new WaitForSeconds(2);
 
-        // Zoom out
+        // Zoom out fully before rotating
         float originalZoom = OrignalCameraZoom;
         float targetZoom = 9.85f;
         float zoomSpeed = 4f;
-        bool rotationStarted = false;
 
         Debug.Log("Zooming out");
-        while (Camera.main.orthographicSize <= targetZoom - 0.20f)
+        while (Mathf.Abs(Camera.main.orthographicSize - targetZoom) > 0.05f)
         {
-            // Lerp the camera's orthographic size toward the target zoom level
             Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
-
-            // Check if we've reached 50% of the zoom transition
-            if (!rotationStarted && Camera.main.orthographicSize >= (originalZoom + targetZoom) / 2)
-            {
-                rotationStarted = true;
-                StartCoroutine(RotateWorld());
-            }
-
             yield return null;
         }
+        Camera.main.orthographicSize = targetZoom; // Snap to the exact target zoom
+        Debug.LogWarning("Zooming out complete");
 
+        // Start rotation after fully zooming out
+        yield return RotateWorld(targetGameState);  // Wait for rotation to complete
 
+        // Zoom back in after rotation is complete
         Debug.Log("Zooming in");
-        while (Camera.main.orthographicSize >= 2.83f)
+        while (Mathf.Abs(Camera.main.orthographicSize - originalZoom) > 0.05f)
         {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 2.8f, Time.deltaTime * zoomSpeed);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, originalZoom, Time.deltaTime * zoomSpeed);
             yield return null;
         }
-
+        Camera.main.orthographicSize = originalZoom; // Snap to the exact original zoom
 
         yield return new WaitForSeconds(1);
     }
 
-    private IEnumerator RotateWorld()
+
+
+    private IEnumerator RotateWorld(GameState targetGameState)
     {
-        // Rotate world with the specified speed until reaching 180 degrees on the Y-axis
+        // Determine the target rotation angle based on the target game state
         float rotationSpeed = 300f;
+        float targetRotation = (targetGameState == GameState.Helheims) ? 180f : 0f;
+
         Debug.Log("Rotating world");
 
-        while (world.transform.rotation.eulerAngles.y < 180)
+        while (true)
         {
-            world.transform.Rotate(Vector3.up, Time.deltaTime * rotationSpeed);
+            // Calculate the current Y angle and the shortest angle difference to the target
+            float currentYRotation = world.transform.rotation.eulerAngles.y;
+            float angleDifference = Mathf.DeltaAngle(currentYRotation, targetRotation);
+
+            // If the angle difference is within a small range, stop rotating
+            if (Mathf.Abs(angleDifference) < 0.5f)
+            {
+                world.transform.rotation = Quaternion.Euler(0, targetRotation, 0);
+                break;
+            }
+
+            // Rotate towards the target at the specified speed
+            float rotationStep = rotationSpeed * Time.deltaTime * Mathf.Sign(angleDifference);
+            world.transform.Rotate(Vector3.up, rotationStep);
+
             yield return null;
         }
+
+        Debug.Log("Rotation complete");
     }
+
 }

@@ -225,6 +225,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 5171541030846086762, guid: e6104043f200f6d4b98f3b5f1ebd2a60, type: 3}
   projectileSpeed: 3
+--- !u!95 &280944466
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280944456}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d99abeebca65624a82bc0401ac96c43, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &339041918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1100,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 423853088430211635, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 133982719826790466, guid: 517f784995bc60d4f84503012f809c05, type: 3}
+    - target: {fileID: 423853088430211635, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423853088430211635, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423853088430211635, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4239260242771868041, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       propertyPath: moveSpeed
       value: 3
@@ -1149,6 +1187,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5402908008362163183, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       insertIndex: -1
       addedObject: {fileID: 280944461}
+    - targetCorrespondingSourceObject: {fileID: 5402908008362163183, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 280944466}
     - targetCorrespondingSourceObject: {fileID: 4118291469251848607, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       insertIndex: -1
       addedObject: {fileID: 905539703}
