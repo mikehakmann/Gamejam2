@@ -43,5 +43,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Midgard
+    uniqueID: 292254799
+    locked: 0
+  - name: Helheim
+    uniqueID: 2337746391
+    locked: 0
   m_RenderingLayers:
   - Default
