@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     public GameState gameState;
     public GameObject world;
+    public GameObject player;
 
     private float OrignalCameraZoom = 2.83f;
 
@@ -40,7 +41,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Changing world to " + targetGameState);
         // Start fly-up animation'
-
+        player.GetComponent<Animator>().Play("FlyUp");
+        LockMovement();
         yield return new WaitForSeconds(2);
 
         // Zoom out fully before rotating
@@ -69,7 +71,9 @@ public class GameManager : MonoBehaviour
         }
         Camera.main.orthographicSize = originalZoom; // Snap to the exact original zoom
 
+        player.GetComponent<Animator>().Play("FlyDown");
         yield return new WaitForSeconds(1);
+        ResumeMovement();
     }
 
 
@@ -103,6 +107,17 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Rotation complete");
+    }
+
+    public void LockMovement()
+    {
+        player.GetComponent<Player>().enabled = false;
+        player.GetComponent<PlayerActions>().enabled = false;
+    }
+    public void ResumeMovement()
+    {
+        player.GetComponent<Player>().enabled = true;
+        player.GetComponent<PlayerActions>().enabled = true;
     }
 
 }

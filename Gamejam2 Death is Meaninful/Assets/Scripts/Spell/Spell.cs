@@ -4,12 +4,22 @@ using UnityEngine;
 public class Spell : MonoBehaviour
 {
     public GameObject projectile;
-    public Upgrade[] upgrades;
+    private Upgrade[] upgrades;
+
+    public float damage;
+    public int pierce = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        upgrades = GameObject.Find("Player").GetComponent<PlayerActions>().upgrades;
+        foreach (var upgrade in upgrades)
+        {
+            if (upgrade.name == "Sniper")
+            {
+                pierce = 2;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -20,6 +30,7 @@ public class Spell : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+
         // Check if the spell collides with an enemy
         if (collision.gameObject.tag == "Enemy")
         {
@@ -30,19 +41,18 @@ public class Spell : MonoBehaviour
                 {
                     U_SplitFour();
                 }
-                // if (upgrade.name == "SpawnTwo")
-                //{
-                //    U_SpawnTwo();
-                //}
-                // if (upgrade.name == "SpawnThree")
-                //{
-                //    U_SpawnThree();
-                //}
-
-
+              
             }
-            // Destroy the spell
-            Destroy(gameObject);
+
+            if(pierce <= 0)
+            {
+                Damage(collision.gameObject.GetComponent<EnemyHealth>());
+                Destroy(gameObject);
+            }
+            else
+            {
+                pierce--;
+            }
         }
     }
   
@@ -54,25 +64,35 @@ public class Spell : MonoBehaviour
         {
             return;
         }
-        // Split the spell into four directions
-        // Instantiate the projectile at ShootSpawn's position and rotation
-        GameObject Spell1 = Instantiate(projectile, transform.position, transform.rotation);
-        GameObject Spell2 = Instantiate(projectile, transform.position, transform.rotation);
-        GameObject Spell3 = Instantiate(projectile, transform.position, transform.rotation);
-        GameObject Spell4 = Instantiate(projectile, transform.position, transform.rotation);
-        //turn off all spell scripts on the spells
 
-        Spell1.GetComponent<Rigidbody2D>().linearVelocity = transform.up * splitSpeed;      // Up
-        Spell2.GetComponent<Rigidbody2D>().linearVelocity = transform.right * splitSpeed;   // Right
-        Spell3.GetComponent<Rigidbody2D>().linearVelocity = -transform.up * splitSpeed;     // Down
-        Spell4.GetComponent<Rigidbody2D>().linearVelocity = -transform.right * splitSpeed;  // Left
+        // Define angles for each projectile direction (in degrees)
+        float[] angles = { 0f, 90f, 180f, 270f };
+
+        foreach (float angle in angles)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+            GameObject spell = Instantiate(projectile, transform.position, rotation);
+
+            Vector2 direction = rotation * Vector2.up;
+            spell.GetComponent<Rigidbody2D>().linearVelocity = direction * splitSpeed;
+
+        }
+
         hasSpawned = true;
-
     }
     void U_SpawnTwo()
     {
     }
     void U_SpawnThree()
     {
+    }
+
+
+    private void Damage(EnemyHealth enemy)
+    {
+
+        if (enemy == null)
+        enemy.TakeDamage(damage);
     }
 }

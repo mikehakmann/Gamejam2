@@ -3,8 +3,10 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour
 {
 
+    public Upgrade[] upgrades;
 
     public GameObject projectile;
+    public GameObject bigProjectile;
     private Transform ShootSpawn;
     private float distanceFromPlayer = 0.2f;
     public float projectileSpeed = 5f;
@@ -20,7 +22,25 @@ public class PlayerActions : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            foreach (var upgrade in upgrades)
+            {
+                if (upgrade.name == "ShootTwo")
+                {
+                    ShootTwo();
+                    break;
+                }
+                else if (upgrade.name == "ShootThree")
+                {
+                    ShootThree();
+                    break;
+                }
+                else
+                {
+                    Shoot();
+                    break;
+
+                }
+            }
         }
     }
 
@@ -43,5 +63,27 @@ public class PlayerActions : MonoBehaviour
         GameObject Spell = Instantiate(projectile, ShootSpawn.position, ShootSpawn.rotation);
 
         Spell.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;  // Adjust speed as needed
+
+        Debug.Log("Shooting normal");
+    }
+
+    public float shootingAngle = 20f;
+    private void ShootTwo()
+    {
+        //rotate the shootspawn by -45
+        ShootSpawn.Rotate(0, 0, -shootingAngle);
+        GameObject Spell1 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
+        Spell1.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
+
+        ShootSpawn.Rotate(0, 0, shootingAngle*2);
+        GameObject Spell2 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
+        Spell2.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
+
+        Debug.Log("Shooting two");
+    }
+    private void ShootThree()
+    {
+
+        Debug.Log("Shooting three");
     }
 }
