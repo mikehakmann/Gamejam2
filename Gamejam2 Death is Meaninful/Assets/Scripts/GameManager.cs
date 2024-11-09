@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
         // Zoom out fully before rotating
         float originalZoom = OrignalCameraZoom;
-        float targetZoom = 9.85f;
+        float targetZoom = 30f;
         float zoomSpeed = 4f;
 
         Debug.Log("Zooming out");
