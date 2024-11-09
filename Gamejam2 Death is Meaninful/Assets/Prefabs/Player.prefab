@@ -1,5 +1,7 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< Updated upstream
+=======
 --- !u!1 &3606626004983387374
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +12,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8466433338110858626}
   - component: {fileID: 5202655997654498844}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerDesign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +89,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+>>>>>>> Stashed changes
 --- !u!1 &4118291469251848607
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,8 +99,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6045135319797105537}
-  - component: {fileID: 1678127381784203659}
+<<<<<<< Updated upstream
+  - component: {fileID: 8119765749201581580}
   m_Layer: 0
+=======
+  - component: {fileID: 1678127381784203659}
+  m_Layer: 7
+>>>>>>> Stashed changes
   m_Name: ShootSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,13 +121,18 @@ Transform:
   m_GameObject: {fileID: 4118291469251848607}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< Updated upstream
   m_LocalPosition: {x: 0, y: 1.12, z: 0}
+  m_LocalScale: {x: 2.0685592, y: 2.0685592, z: 2.0685592}
+=======
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+>>>>>>> Stashed changes
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4716968154879199310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1678127381784203659
+--- !u!212 &8119765749201581580
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,6 +187,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+<<<<<<< Updated upstream
+=======
 --- !u!1 &4158524439946380312
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6158326261477065260}
   - component: {fileID: 4876475957810191717}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,6 +276,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+>>>>>>> Stashed changes
 --- !u!1 &5402908008362163183
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,9 +289,18 @@ GameObject:
   - component: {fileID: 423853088430211635}
   - component: {fileID: 1521835638270159462}
   - component: {fileID: 4239260242771868041}
+<<<<<<< Updated upstream
+  - component: {fileID: 7642491635988463944}
+  - component: {fileID: 3103715364424913695}
+  - component: {fileID: 1354480210856583491}
+  m_Layer: 0
+=======
   - component: {fileID: 5568553964658821067}
   - component: {fileID: 6232587131180194930}
-  m_Layer: 0
+  - component: {fileID: 5884335111029787959}
+  - component: {fileID: 6108908854354409583}
+  m_Layer: 7
+>>>>>>> Stashed changes
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,12 +317,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.97, y: 0.918, z: -1.46}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.18432152, y: 0.18432152, z: 0.18432152}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8466433338110858626}
   - {fileID: 6045135319797105537}
-  - {fileID: 6158326261477065260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &423853088430211635
@@ -344,8 +367,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Color: {r: 0, g: 0.06005001, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -381,7 +404,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &4239260242771868041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +418,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
+  pickedUpPowerUps: []
+<<<<<<< Updated upstream
+--- !u!114 &7642491635988463944
+=======
 --- !u!114 &5568553964658821067
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,23 +435,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22de7e8823a2fa4190b01c0e7a91421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgrades:
-  - {fileID: 11400000, guid: 2765dd6dc894c304896054e50a2594ff, type: 2}
-  - {fileID: 11400000, guid: de6b5fca771915549a5aadfb345600ff, type: 2}
-  - {fileID: 11400000, guid: b3642116528c7fe4589735c13e506c34, type: 2}
   projectile: {fileID: 5171541030846086762, guid: e6104043f200f6d4b98f3b5f1ebd2a60, type: 3}
-  bigProjectile: {fileID: 5171541030846086762, guid: dc224dae95a9a4f40a76545fea1ccaea, type: 3}
-  projectileSpeed: 3
-  shootingAngle: 20
---- !u!95 &6232587131180194930
-Animator:
-  serializedVersion: 7
+--- !u!114 &3103715364424913695
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5402908008362163183}
   m_Enabled: 1
+<<<<<<< Updated upstream
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d12b47a122d2d40844c18d75b8c3e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+--- !u!58 &1354480210856583491
+=======
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0d99abeebca65624a82bc0401ac96c43, type: 2}
   m_CullingMode: 0
@@ -437,3 +465,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!58 &5884335111029787959
+>>>>>>> Stashed changes
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402908008362163183}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+<<<<<<< Updated upstream
+  m_Radius: 0.49999997
+=======
+  m_Radius: 0.2
+--- !u!114 &6108908854354409583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402908008362163183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d12b47a122d2d40844c18d75b8c3e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  teleporterPrefab: {fileID: 7141866580331433234, guid: ac8204805f9285f439ab26652b99ddba, type: 3}
+>>>>>>> Stashed changes
