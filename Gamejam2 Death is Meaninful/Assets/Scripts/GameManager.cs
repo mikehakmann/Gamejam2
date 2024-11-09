@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public enum GameState
 {
@@ -16,21 +18,20 @@ public class GameManager : MonoBehaviour
     public GameObject world;
     public GameObject player;
 
-    private float OrignalCameraZoom = 2.83f;
+    public CinemachineCamera cinemachineCamera; // Change Camera to CinemachineVirtualCamera
+    public Light2D sceneLight;
+    private Color midgardLightColor = Color.white;
+    private Color helheimsLightColor = Color.gray * 0.3f;
+
+    private float originalCameraZoom = 2.83f;
 
     private List<EnemyHealth> enemiesInScene = new List<EnemyHealth>();  // List to keep track of enemies
 
+
+
     private void Awake()
     {
-        // Singleton pattern enforcement
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -79,37 +80,72 @@ public class GameManager : MonoBehaviour
     private IEnumerator ChangeWorld(GameState targetGameState)
     {
         Debug.Log("Changing world to " + targetGameState);
+        // Start fly-up animation
         player.GetComponent<Animator>().Play("FlyUp");
         LockMovement();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
-        float originalZoom = OrignalCameraZoom;
-        float targetZoom = 9.85f;
+        // Zoom out fully before rotating
+        float targetZoom = 30f;
         float zoomSpeed = 4f;
-
+        //ZOOM ------------------------------------------------------------
         Debug.Log("Zooming out");
-        while (Mathf.Abs(Camera.main.orthographicSize - targetZoom) > 0.05f)
+        while (Mathf.Abs(cinemachineCamera.Lens.OrthographicSize - targetZoom) > 0.05f)
         {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
+            cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
             yield return null;
         }
-        Camera.main.orthographicSize = targetZoom;
+        cinemachineCamera.Lens.OrthographicSize = targetZoom; // Snap to the exact target zoom
         Debug.LogWarning("Zooming out complete");
+        //------------------------------------------------------------------
+        // Start rotation after fully zooming out
+        yield return RotateWorld(targetGameState);  // Wait for rotation to complete
 
-        yield return RotateWorld(targetGameState);
+
+        // lIGHT ----------------------------------------------------------
+        Debug.Log("Changing light color");
+        Color targetColor = targetGameState == GameState.Helheims ? helheimsLightColor : midgardLightColor;
+        float colorTransitionSpeed = 4f;
+        float colorTolerance = 0.01f; // Margin for color difference
+
+        while (Vector3.Distance(new Vector3(sceneLight.color.r, sceneLight.color.g, sceneLight.color.b),
+                                new Vector3(targetColor.r, targetColor.g, targetColor.b)) > colorTolerance)
+        {
+            sceneLight.color = Color.Lerp(sceneLight.color, targetColor, Time.deltaTime * colorTransitionSpeed);
+            yield return null;
+        }
+        sceneLight.color = targetColor; // Snap to the exact target color
+
+        //------------------------------------------------------------------
+        // Zoom in after rotating and changing light color
 
         Debug.Log("Zooming in");
-        while (Mathf.Abs(Camera.main.orthographicSize - originalZoom) > 0.05f)
+        while (Mathf.Abs(cinemachineCamera.Lens.OrthographicSize - originalCameraZoom) > 0.05f)
         {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, originalZoom, Time.deltaTime * zoomSpeed);
+            cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, originalCameraZoom, Time.deltaTime * zoomSpeed);
             yield return null;
         }
-        Camera.main.orthographicSize = originalZoom;
+        cinemachineCamera.Lens.OrthographicSize = originalCameraZoom; // Snap to the exact original zoom
 
         player.GetComponent<Animator>().Play("FlyDown");
         yield return new WaitForSeconds(1);
         ResumeMovement();
+        //------------------------------------------------------------------
+
+
+
+        if (gameState == GameState.Midgard)
+        {
+            gameState = GameState.Helheims;
+            Debug.Log("Changing gamestate to " + gameState);
+        }
+        else
+        {
+            gameState = GameState.Midgard;
+            Debug.Log("Changing gamestate to " + gameState);
+        }
     }
+
 
     private IEnumerator RotateWorld(GameState targetGameState)
     {
