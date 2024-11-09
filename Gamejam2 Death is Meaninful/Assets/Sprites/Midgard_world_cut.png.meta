@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Midgard_world_cut_0: -6941815450597549508
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
