@@ -20,13 +20,10 @@ public class Spell : MonoBehaviour
                 pierce = 2;
             }
         }
+
+        Destroy(gameObject,4);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -65,22 +62,29 @@ public class Spell : MonoBehaviour
             return;
         }
 
-        // Define angles for each projectile direction (in degrees)
-        float[] angles = { 0f, 90f, 180f, 270f };
+        // Define base angles for each projectile direction (in degrees)
+        float[] baseAngles = { 0f, 90f, 180f, 270f };
 
-        foreach (float angle in angles)
+        foreach (float baseAngle in baseAngles)
         {
+            // Add a random offset between -10 and +10 degrees
+            float randomOffset = Random.Range(-10f, 10f);
+            float angle = baseAngle + randomOffset;
+
+            // Create rotation with the modified angle
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
+            // Instantiate the projectile at this rotation
             GameObject spell = Instantiate(projectile, transform.position, rotation);
 
+            // Calculate the direction based on the adjusted rotation
             Vector2 direction = rotation * Vector2.up;
             spell.GetComponent<Rigidbody2D>().linearVelocity = direction * splitSpeed;
-
         }
 
         hasSpawned = true;
     }
+
     void U_SpawnTwo()
     {
     }
@@ -95,4 +99,6 @@ public class Spell : MonoBehaviour
         if (enemy == null)
         enemy.TakeDamage(damage);
     }
+
+
 }

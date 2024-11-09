@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         // Start rotation after fully zooming out
         yield return RotateWorld(targetGameState);  // Wait for rotation to complete
 
-        // Zoom back in after rotation is complete
         Debug.Log("Zooming in");
         while (Mathf.Abs(Camera.main.orthographicSize - originalZoom) > 0.05f)
         {

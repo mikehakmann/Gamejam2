@@ -1362,6 +1362,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: upgrades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: 'upgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: de6b5fca771915549a5aadfb345600ff, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
 {
+    //singleton
+    public static PlayerActions instance;
+
 
     public Upgrade[] upgrades;
 
@@ -14,6 +17,8 @@ public class PlayerActions : MonoBehaviour
     void Start()
     {
         ShootSpawn = transform.Find("ShootSpawn");
+        instance = this;
+
     }
 
     void Update()

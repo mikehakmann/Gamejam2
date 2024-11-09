@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8433684053561705811}
   - component: {fileID: 5190821843897040278}
   - component: {fileID: 803573833895715247}
+  - component: {fileID: 3931476799032068246}
   m_Layer: 0
   m_Name: SpellSplit
   m_TagString: Untagged
@@ -152,3 +153,17 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &3931476799032068246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5171541030846086762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8febf923386f9c840abe65c127f74f51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  pierce: 0

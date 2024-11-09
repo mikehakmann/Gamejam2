@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //singleton
+    public static Player instance;
+
 
     public float moveSpeed = 5f;  
 
@@ -10,7 +13,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
+        instance = this;
+
+        
     }
 
     void Update()
