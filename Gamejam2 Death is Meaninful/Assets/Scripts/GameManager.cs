@@ -128,7 +128,8 @@ public class GameManager : MonoBehaviour
         cinemachineCamera.Lens.OrthographicSize = originalCameraZoom; // Snap to the exact original zoom
 
         player.GetComponent<Animator>().Play("FlyDown");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.45f);
+        CameraManager.Instance.Shake();
         ResumeMovement();
         //------------------------------------------------------------------
 
