@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     // Private list to store picked-up power-ups, but visible in the Inspector
     [SerializeField]
-    private List<PowerUp> pickedUpPowerUps = new List<PowerUp>();
+    private List<EnemyDrop> pickedUpPowerUps = new List<EnemyDrop>();
 
     void Start()
     {
@@ -37,9 +37,9 @@ public class Player : MonoBehaviour
     }
 
     // Method to handle power-up pickup
-    public void PickUpPowerUp(PowerUp powerUp)
+    public void PickUpPowerUp(EnemyDrop enemyDrop)
     {
-        pickedUpPowerUps.Add(powerUp);  // Add the power-up to the list
-        Debug.Log("Picked up power-up: " + powerUp.powerUpType);
+        pickedUpPowerUps.Add(enemyDrop);  // Add the power-up to the list
+        Debug.Log("Picked up power-up: " + enemyDrop.powerUpType);
     }
 }

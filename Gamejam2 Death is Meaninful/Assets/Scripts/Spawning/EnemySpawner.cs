@@ -2,47 +2,72 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;        // Prefab of the enemy to spawn
-    public Camera mainCamera;             // The camera in which to spawn enemies
-    public float spawnInterval = 2f;      // Interval between spawns
-    public int maxEnemies = 10;           // Max number of enemies that can exist at once
+    [Header("Enemy Settings")]
+    public GameObject enemyPrefab;          // Prefab for the regular enemy
+    public float enemySpawnInterval = 2f;   // Spawn interval for the regular enemy
+    public int maxEnemyCount = 10;          // Max number of regular enemies
 
-    private float spawnTimer = 0f;
-    private int currentEnemyCount = 0;
+    [Header("RunAwayEnemy Settings")]
+    public GameObject runAwayEnemyPrefab;   // Prefab for the RunAwayEnemy
+    public float runAwaySpawnInterval = 3f; // Spawn interval for the RunAwayEnemy
+    public int maxRunAwayCount = 5;         // Max number of RunAwayEnemies
+
+    public Camera mainCamera;               // Camera in which to spawn enemies
+
+    private float enemySpawnTimer = 0f;     // Timer to control regular enemy spawning
+    private float runAwaySpawnTimer = 0f;   // Timer to control RunAwayEnemy spawning
+    private int currentEnemyCount = 0;      // Current count of regular enemies
+    private int currentRunAwayCount = 0;    // Current count of RunAwayEnemies
 
     void Start()
     {
         if (mainCamera == null)
-            mainCamera = Camera.main;     // Automatically use the main camera if not set
+            mainCamera = Camera.main;       // Use main camera if none is assigned
     }
 
     void Update()
     {
-        // Increment the timer
-        spawnTimer += Time.deltaTime;
+        // Update spawn timers
+        enemySpawnTimer += Time.deltaTime;
+        runAwaySpawnTimer += Time.deltaTime;
 
-        // Check if it's time to spawn a new enemy and if we haven't hit the max count
-        if (spawnTimer >= spawnInterval && currentEnemyCount < maxEnemies)
+        // Check if it's time to spawn a regular enemy
+        if (enemySpawnTimer >= enemySpawnInterval && currentEnemyCount < maxEnemyCount)
         {
-            SpawnEnemy();
-            spawnTimer = 0f;
+            SpawnEnemy(enemyPrefab, ref currentEnemyCount);
+            enemySpawnTimer = 0f;           // Reset the timer for regular enemy
+        }
+
+        // Check if it's time to spawn a RunAwayEnemy
+        if (runAwaySpawnTimer >= runAwaySpawnInterval && currentRunAwayCount < maxRunAwayCount)
+        {
+            SpawnEnemy(runAwayEnemyPrefab, ref currentRunAwayCount);
+            runAwaySpawnTimer = 0f;         // Reset the timer for RunAwayEnemy
         }
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy(GameObject prefab, ref int currentCount)
     {
-        // Get the bounds of the camera view
+        // Get random spawn position within the camera's view
         Vector3 screenPosition = new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), mainCamera.nearClipPlane);
         Vector3 spawnPosition = mainCamera.ScreenToWorldPoint(screenPosition);
 
-        // Spawn the enemy
-        Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        currentEnemyCount++;
+        // Spawn the enemy and increment the count
+        Instantiate(prefab, spawnPosition, Quaternion.identity);
+        currentCount++;
     }
 
-    // Optional: call this method from other scripts to decrease the enemy count when an enemy is destroyed
-    public void OnEnemyDestroyed()
+    // Decrease the enemy count when an enemy is destroyed
+    public void OnEnemyDestroyed(GameObject enemy)
     {
-        currentEnemyCount--;
+        // Check if the destroyed enemy is of type Enemy or RunAwayEnemy
+        if (enemyPrefab != null && enemyPrefab.name == enemy.name)
+        {
+            currentEnemyCount--;
+        }
+        else if (runAwayEnemyPrefab != null && runAwayEnemyPrefab.name == enemy.name)
+        {
+            currentRunAwayCount--;
+        }
     }
 }

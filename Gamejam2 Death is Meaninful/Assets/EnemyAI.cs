@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float idleSpeed = 2f;              // Speed when idle wandering
-    public float runAwaySpeed = 5f;           // Speed when running away from the player
-    public float runDistance = 5f;            // Distance to start running away from the player
-    public float runDuration = 1f;            // Duration to keep running after player leaves range
-    public float idleDuration = 1f;           // Duration to walk in a random direction
-    public float moveToCenterDuration = 1f;   // Duration to move toward the center when inside Border
+    public float idleSpeed;               // Speed when idle wandering (set in Inspector)
+    public float runAwaySpeed;            // Speed when running away from the player (set in Inspector)
+    public float runDistance;             // Distance to start running away from the player (set in Inspector)
+    public float runDuration;             // Duration to keep running after player leaves range (set in Inspector)
+    public float idleDuration;            // Duration to walk in a random direction (set in Inspector)
+    public float moveToCenterDuration;    // Duration to move toward the center when inside Border (set in Inspector)
     
     [HideInInspector] public float distanceToPlayer; // Distance to the player (visible in Inspector)
     
-    private Transform player;                 // Reference to the player's Transform
-    private Vector2 lastRunDirection;         // Last direction the enemy ran
-    private Coroutine currentCoroutine;       // Reference to the current active coroutine
+    private Transform player;             // Reference to the player's Transform
+    private Vector2 lastRunDirection;     // Last direction the enemy ran
+    private Coroutine currentCoroutine;   // Reference to the current active coroutine
 
     // Define states
     private enum EnemyState { Idle, RunningAway, ContinueRunning, MovingToCenter }
-    private EnemyState currentState = EnemyState.Idle;
+    private EnemyState currentState = EnemyState.MovingToCenter;  // Initial state is MovingToCenter
 
     void Start()
     {
@@ -33,11 +33,19 @@ public class EnemyAI : MonoBehaviour
             Debug.LogWarning("Player GameObject not found in the scene!");
         }
 
-        // Start in the idle state
+        // Start in the MovingToCenter state initially, then transition to Idle after 0.1 seconds
+        ChangeState(EnemyState.MovingToCenter);
+        Invoke("StartIdleState", 0.1f);
+    }
+
+    // Method to stop all coroutines and transition to Idle state
+    private void StartIdleState()
+    {
+        StopAllCoroutines();
         ChangeState(EnemyState.Idle);
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (player != null)  // Ensure the player is assigned
         {
@@ -59,9 +67,6 @@ public class EnemyAI : MonoBehaviour
     {
         // If the current state is the same as the new state, do nothing
         if (currentState == newState) return;
-
-        // Log the state change
-        Debug.Log($"Changing state from {currentState} to {newState}");
 
         // Stop the current coroutine if one is active
         if (currentCoroutine != null)
@@ -111,10 +116,6 @@ public class EnemyAI : MonoBehaviour
             // Keep moving in the last direction away from the player
             MoveInDirection(lastRunDirection, runAwaySpeed);
             LookInDirection(lastRunDirection); // Look in the direction of running
-
-            // Update direction if the player has moved
-            Vector2 directionToPlayer = (transform.position - player.position).normalized;
-            lastRunDirection = directionToPlayer;
 
             yield return null; // Wait for the next frame to continue running away
         }
