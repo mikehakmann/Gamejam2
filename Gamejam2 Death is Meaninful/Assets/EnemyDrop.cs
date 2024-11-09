@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour
+public class EnemyDrop : MonoBehaviour
 {
     public enum PowerUpType { SpeedBoost, Shield, ExtraLife, DamageBoost }
     public enum PowerUpState { GraveStoneState, HellState }
@@ -39,6 +39,7 @@ public class PowerUp : MonoBehaviour
     {
         if (powerUpState == PowerUpState.GraveStoneState)
         {
+            // Activate GraveStone visual and disable HellState visual
             GraveStoneSprite.SetActive(true);
             HellStateSprite.SetActive(false);
 
@@ -48,6 +49,7 @@ public class PowerUp : MonoBehaviour
         }
         else if (powerUpState == PowerUpState.HellState)
         {
+            // Activate HellState visual and disable GraveStone visual
             GraveStoneSprite.SetActive(false);
             HellStateSprite.SetActive(true);
 

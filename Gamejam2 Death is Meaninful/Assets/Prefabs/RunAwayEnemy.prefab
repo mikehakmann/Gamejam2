@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3467749324997034743}
   - component: {fileID: 8603301841678873980}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 2361587096211890449}
   - component: {fileID: 2906638991942467852}
   - component: {fileID: 5586374270963661509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RunAwayEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -148,7 +148,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &7142027221165804737
@@ -226,10 +226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84797abe56bd9194eb8b5062c669e45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleSpeed: 1
-  runAwaySpeed: 2
+  idleSpeed: 0.5
+  runAwaySpeed: 7
   runDistance: 1.36
   runDuration: 1
-  idleDuration: 1
+  idleDuration: 2
   moveToCenterDuration: 1
   distanceToPlayer: 0

@@ -9,8 +9,6 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        //TODO Test
-        Kill();
         // Set the enemy's health to the maximum at the start
         currentHealth = maxHealth;
     }
@@ -36,6 +34,7 @@ public class EnemyHealth : MonoBehaviour
         if (onDeathSpawnPrefab != null)
         {
             Instantiate(onDeathSpawnPrefab, transform.position, Quaternion.identity);
+            
         }
         else
         {

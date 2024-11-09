@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5705210930439825826}
   - component: {fileID: 1911690810177157903}
   - component: {fileID: 3997850895397194900}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
-  stoppingDistance: 1.5
+  speed: 1
+  stoppingDistance: 0.5
 --- !u!114 &1911690810177157903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,9 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5225c9ed716bf747be5a8a73031c9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1
   damageAmount: 20
-  onDeathSpawnPrefab: {fileID: 2569099749642797385, guid: d425e82a810196f429abce01e84ac833, type: 3}
+  onDeathSpawnPrefab: {fileID: 1664685119702501083, guid: 77f536fe71dbc0f4698060f66f082a56, type: 3}
 --- !u!114 &3997850895397194900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2328163040560444269}
   - component: {fileID: 1167879928124943525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

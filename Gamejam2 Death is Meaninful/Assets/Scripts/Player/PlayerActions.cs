@@ -48,5 +48,27 @@ public class PlayerActions : MonoBehaviour
 
         // Set the projectile's velocity in the direction ShootSpawn is facing
         Spell.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;  // Adjust speed as needed
+<<<<<<< Updated upstream
+=======
+
+    }
+
+    public float shootingAngle = 20f;
+    private void ShootTwo()
+    {
+        //rotate the shootspawn by -45
+        ShootSpawn.Rotate(0, 0, -shootingAngle);
+        GameObject Spell1 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
+        Spell1.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
+
+        ShootSpawn.Rotate(0, 0, shootingAngle*2);
+        GameObject Spell2 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
+        Spell2.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
+
+    }
+    private void ShootThree()
+    {
+
+>>>>>>> Stashed changes
     }
 }
