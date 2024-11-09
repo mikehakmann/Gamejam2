@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   damageAmount: 20
+  onDeathSpawnPrefab: {fileID: 2569099749642797385, guid: d425e82a810196f429abce01e84ac833, type: 3}
 --- !u!114 &3997850895397194900
 MonoBehaviour:
   m_ObjectHideFlags: 0
