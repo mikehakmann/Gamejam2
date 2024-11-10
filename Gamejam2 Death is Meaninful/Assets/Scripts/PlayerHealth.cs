@@ -1,14 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;                  // Maximum health of the player
     private float currentHealth;                    // Current health of the player
     public GameObject teleporterPrefab;             // Prefab of the teleporter to spawn on death
+    private Image healthBar;                        // Reference to the health bar image
+    private Animator hpAnim;                        // Reference to the health bar animator
 
     void Start()
     {
         currentHealth = maxHealth;
+        healthBar = GameObject.Find("HpMiddle").GetComponent<Image>();
+        hpAnim = GameObject.Find("Hp").GetComponent<Animator>();
     }
 
     void Update()
@@ -18,10 +23,18 @@ public class PlayerHealth : MonoBehaviour
         {
             Kill();
         }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            TakeDamage(20);
+        }
+        // Update the health bar fill amount based on the current health
+        healthBar.fillAmount = currentHealth / maxHealth;
+
     }
 
     public void TakeDamage(float amount)
     {
+        hpAnim.SetTrigger("HpBounce");
         currentHealth -= amount;
         if (currentHealth <= 0)
         {

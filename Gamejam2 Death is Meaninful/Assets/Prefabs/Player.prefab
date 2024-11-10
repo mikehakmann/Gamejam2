@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 1521835638270159462}
   - component: {fileID: 4239260242771868041}
   - component: {fileID: 5568553964658821067}
+  - component: {fileID: 8089996576712013497}
   - component: {fileID: 6232587131180194930}
   - component: {fileID: 2802937713138678641}
   m_Layer: 0
@@ -360,6 +361,20 @@ MonoBehaviour:
   bigProjectile: {fileID: 5171541030846086762, guid: dc224dae95a9a4f40a76545fea1ccaea, type: 3}
   projectileSpeed: 3
   shootingAngle: 20
+--- !u!114 &8089996576712013497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5402908008362163183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37d12b47a122d2d40844c18d75b8c3e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  teleporterPrefab: {fileID: 0}
 --- !u!95 &6232587131180194930
 Animator:
   serializedVersion: 7
