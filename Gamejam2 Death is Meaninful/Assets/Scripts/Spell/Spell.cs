@@ -1,17 +1,19 @@
+using System.Collections.Generic;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 public class Spell : MonoBehaviour
 {
     public GameObject projectile;
-    private Upgrade[] upgrades;
+    public List<Upgrade> upgrades = new List<Upgrade>();
 
-    public float damage;
+    private float damage;
     public int pierce = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        damage = GameObject.Find("Player").GetComponent<PlayerActions>().damage;
         upgrades = GameObject.Find("Player").GetComponent<PlayerActions>().upgrades;
         foreach (var upgrade in upgrades)
         {
