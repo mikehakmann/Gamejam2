@@ -461,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &494033753
 RectTransform:
   m_ObjectHideFlags: 0
@@ -831,7 +831,7 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
@@ -2059,7 +2059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3361,6 +3361,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5202655997654498844, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5232919864355646604, guid: d51ff57b76e14104fa91be78238c2ed6, type: 3}
+    - target: {fileID: 5202655997654498844, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
@@ -3371,6 +3375,10 @@ PrefabInstance:
     - target: {fileID: 5402908008362163183, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: upgrades.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8089996576712013497, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       propertyPath: damagePerSecond

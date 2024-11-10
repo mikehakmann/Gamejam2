@@ -49,17 +49,20 @@ public class PlayerActions : MonoBehaviour
                     ShootTwo();
                     break;
                 }
-                else if (upgrade.name == "ShootThree")
+               
+                if (upgrade.name == "ShootThree")
                 {
                     ShootThree();
                     break;
                 }
-                else
-                {
-                    Shoot();
-                    break;
-                }
+
+                Shoot();
+                return;
+
             }
+
+            if(upgrades.Count == 0)
+                Shoot();
         }
     }
     public void Upgrade(Upgrade upgrade)

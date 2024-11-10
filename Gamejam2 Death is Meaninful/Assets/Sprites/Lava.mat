@@ -60,10 +60,10 @@ Material:
     - _Cull: 2
     - _DstBlend: 10
     - _HighlightSpread: 2.5
-    - _MovementSpeed: 1
+    - _MovementSpeed: 1.58
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 2.38
+    - _Scale: 6.6
     - _SrcBlend: 5
     - _StartTime: 10.15
     - _Surface: 1
