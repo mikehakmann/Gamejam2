@@ -27,7 +27,7 @@ public class PlayerActions : MonoBehaviour
     {
         ShootSpawn = transform.Find("ShootSpawn");
         instance = this;
-        speed = GetComponent<Player>().moveSpeed;
+        speed = GetComponent<Player>().moveSpeed; 
         cooldownTime = 1 / fireRate;
     }
 

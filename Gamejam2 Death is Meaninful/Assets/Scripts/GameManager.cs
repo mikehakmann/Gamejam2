@@ -18,12 +18,13 @@ public class GameManager : MonoBehaviour
     public GameObject world;
     public GameObject player;
 
+    private Animator HpBarAnim;
     public CinemachineCamera cinemachineCamera; // Using CinemachineCamera as specified
     public Light2D sceneLight;
     private Color midgardLightColor = Color.white;
     private Color helheimsLightColor = Color.gray * 0.3f;
 
-    private float originalCameraZoom = 2.83f;
+    private float originalCameraZoom = 4.67f;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameState = GameState.Midgard;
+        HpBarAnim = GameObject.Find("Hp").GetComponent<Animator>();
     }
 
     [ContextMenu("ChangeGameState")]
@@ -154,6 +156,15 @@ public class GameManager : MonoBehaviour
         PlayFlyUpDownAllTargets();
         yield return new WaitForSeconds(0.45f);
         CameraManager.Instance.Shake();
+
+        if(targetGameState == GameState.Helheims)
+        {
+        HpBarAnim.Play("HelheimTimer");
+        }
+        else
+        {
+         HpBarAnim.Play("MidgardTimer");
+        }
         ResumeMovement();
 
         ChangeStateOnAllEnemyDrops();  // Change state on all EnemyDrops after ResumeMovement
