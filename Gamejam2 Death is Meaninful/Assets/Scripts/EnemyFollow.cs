@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyFollow : MonoBehaviour
 {
     public Transform player;               // Reference to the player's Transform
-    public float speed = 5f;               // Speed at which the enemy follows
+    public float speed;                    // Constant speed at which the enemy follows
     public float stoppingDistance = 1.5f;  // Distance to stop following to avoid collision
     public Transform spriteTransform;      // Reference to the sprite's Transform (only this will rotate)
 
@@ -21,26 +21,23 @@ public class EnemyFollow : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (player != null)  // Ensure the player is assigned
         {
-            // Calculate the distance between the enemy and the player
+            // Calculate the direction toward the player
+            Vector3 direction = (player.position - transform.position).normalized;
             float distance = Vector3.Distance(transform.position, player.position);
 
-            // Move toward the player if beyond the stopping distance
+            // Move the enemy toward the player at constant speed if beyond stopping distance
             if (distance > stoppingDistance)
             {
-                // Calculate direction toward the player
-                Vector3 direction = (player.position - transform.position).normalized;
-
-                // Move the enemy toward the player
-                transform.position += direction * speed * Time.deltaTime;
+                // Move at a constant speed toward the player
+                transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
             }
 
             // Calculate the angle between the enemy's position and the player's position
-            Vector3 difference = player.position - transform.position;
-            float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg - 90f; // Add 45 degrees
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f; // Offset by 90 degrees
 
             // Apply rotation only to the spriteTransform's z-axis
             if (spriteTransform != null)
