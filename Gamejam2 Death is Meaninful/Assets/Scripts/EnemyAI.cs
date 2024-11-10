@@ -9,7 +9,9 @@ public class EnemyAI : MonoBehaviour
     public float runDuration;             // Duration to keep running after player leaves range (set in Inspector)
     public float idleDuration;            // Duration to walk in a random direction (set in Inspector)
     public float moveToCenterDuration;    // Duration to move toward the center when inside Border (set in Inspector)
-    
+
+    public Transform spriteTransform;     // Reference to the sprite's Transform
+
     [HideInInspector] public float distanceToPlayer; // Distance to the player (visible in Inspector)
     
     private Transform player;             // Reference to the player's Transform
@@ -184,11 +186,18 @@ public class EnemyAI : MonoBehaviour
 
     void LookInDirection(Vector2 direction)
     {
-        // Calculate the angle based on the given direction
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        if (spriteTransform != null)
+        {
+            // Calculate the angle based on the given direction and add 90 degrees
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
 
-        // Apply the rotation only on the z-axis
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+            // Apply the rotation only to the spriteTransform on the z-axis
+            spriteTransform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+        else
+        {
+            Debug.LogWarning("Sprite Transform not assigned in EnemyAI.");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
