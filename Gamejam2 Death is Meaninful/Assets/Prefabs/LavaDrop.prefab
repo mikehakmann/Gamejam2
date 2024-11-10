@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aca0d894528a3d74ba09a200484903cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpType: 0
+  upgrade: {fileID: 0}
   powerUpState: 0
   GraveStoneSprite: {fileID: 8372121616856901467}
   HellStateSprite: {fileID: 2723958990475994494}
@@ -340,7 +340,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8372121616856901467}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

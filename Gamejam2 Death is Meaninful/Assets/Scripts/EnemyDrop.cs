@@ -15,6 +15,8 @@ public class EnemyDrop : MonoBehaviour
     private DamageArea damageArea;            // Reference to the DamageArea component
     private Collider2D powerUpCollider;       // Reference to the Collider component
 
+    public bool canBePickedUp = false;
+    
     private void Start()
     {
         // Ensure the power-up starts in GraveStoneState
@@ -84,6 +86,9 @@ public class EnemyDrop : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(!canBePickedUp) {
+            return;
+        }
         PlayerActions player = other.GetComponent<PlayerActions>();
         if (player != null)
         {

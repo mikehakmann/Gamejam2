@@ -9,7 +9,7 @@ public class TeleportToMidgaard : MonoBehaviour
     public GameObject ClosedSprite;              // Reference to the closed state visual
     public GameObject OpenSprite;                // Reference to the open state visual
     public Collider2D CircleTriggerCollider2D;   // Reference to the trigger collider
-    public float initialClosedDuration = 5f;     // Duration for which the closed state is active
+    public float initialClosedDuration = 1f;     // Duration for which the closed state is active
 
     private void Start()
     {
@@ -60,11 +60,13 @@ public class TeleportToMidgaard : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && GameManager.Instance != null && currentState == State.Opened)
+        if (other.CompareTag("Player"))
         {
             // When the player enters the trigger in the opened state, change the GameState to Midgard
             GameManager.Instance.ChangeGameState();
             Debug.Log("Player entered trigger - GameState changed to Midgard");
+            CircleTriggerCollider2D.enabled = false;
+            Destroy(gameObject,2);
         }
     }
 }

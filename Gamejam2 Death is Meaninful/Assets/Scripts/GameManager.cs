@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
         
         playerHealth  = player.GetComponent<PlayerHealth>();
         
-        playerHealth.ToggleDamageOverTime(true);
         
     }
 
@@ -194,13 +193,15 @@ public class GameManager : MonoBehaviour
                 playerHealth.SetHealth(playerActions.maxHP);
             }
             
+            playerHealth.ToggleDamageOverTime(true);
+
+            
         }
         
         
         
         if (gameState == GameState.Midgard)
         {
-            playerHealth.ToggleDamageOverTime(true);
         }
         
         
