@@ -12,11 +12,15 @@ public class PlayerHealth : MonoBehaviour
     private Animator hpAnim;                     // Reference to the health bar animator
     private Coroutine damageOverTimeCoroutine;   // Reference to continuous damage coroutine
 
+    private GameObject Endscreen;
+
     void Start()
     {
         currentHealth = maxHealth;
         healthBar = GameObject.Find("HpMiddle").GetComponent<Image>();
         hpAnim = GameObject.Find("Hp").GetComponent<Animator>();
+        Endscreen = GameObject.Find("Deathscreen");
+        Endscreen.SetActive(false);
     }
 
     void Update()
@@ -103,7 +107,20 @@ public class PlayerHealth : MonoBehaviour
 
     void Kill()
     {
+
+        if(GameManager.Instance.gameState == GameState.Helheims)
+        {
+            Endscreen.SetActive(true);
+            foreach(Transform child in Endscreen.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+
+        }
+        else
+        {
         GameManager.Instance.ChangeGameState();  // Change the game state when the player dies
+        }
 
         Debug.Log("Player has died!");
 
