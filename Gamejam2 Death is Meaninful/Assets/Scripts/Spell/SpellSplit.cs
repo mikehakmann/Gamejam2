@@ -6,7 +6,8 @@ public class SpellSplit : MonoBehaviour
     public float damage;
     public int pierce = 0;
     private PlayerActions player;
-
+    private bool firstHitIgnored = false; // Track if the first enemy hit should be ignored
+    private GameObject firstEnemyHit;     //
     private void Start()
     {
         player = PlayerActions.instance;
@@ -22,13 +23,22 @@ public class SpellSplit : MonoBehaviour
             }
         }
     }
+
+
+  
     void OnTriggerEnter2D(Collider2D collision)
     {
-
         // Check if the spell collides with an enemy
         if (collision.gameObject.tag == "Enemy")
         {
-
+            if (!firstHitIgnored)
+            {
+                // Record the first enemy hit and ignore it
+                firstEnemyHit = collision.gameObject;
+                firstHitIgnored = true;
+                Debug.Log("Ignoring first enemy hit: " + firstEnemyHit.name);
+                return; // Exit the method without applying damage or decreasing pierce
+            }
 
             if (pierce <= 0)
             {

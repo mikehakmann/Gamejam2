@@ -45,18 +45,5 @@ public class EnemyHealth : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Check for collisions based on the name of the GameObject
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        // Check if the other object's name is "Spell"
-        // TODO: Change this to be handled from the spell
-        if (other.gameObject.name == "Spell(Clone)")
-        {
-            // Take damage
-            TakeDamage(damageAmount);
-            
-            // Optional: Destroy the "Spell" GameObject after it hits
-            Destroy(other.gameObject);
-        }
-    }
+
 }

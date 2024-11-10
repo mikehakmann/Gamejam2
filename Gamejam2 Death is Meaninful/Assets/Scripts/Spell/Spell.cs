@@ -36,7 +36,7 @@ public class Spell : MonoBehaviour
             {
                 if(upgrade.name == "SplitFour")
                 {
-                    U_SplitFour();
+                    U_SplitFour(collision.gameObject.GetComponent<EnemyHealth>());
                 }
               
             }
@@ -55,7 +55,7 @@ public class Spell : MonoBehaviour
   
     float splitSpeed = 2f;
     bool hasSpawned = false;
-    private void U_SplitFour()
+    private void U_SplitFour(EnemyHealth enemyHit)
     {
         if (hasSpawned)
         {
@@ -85,12 +85,6 @@ public class Spell : MonoBehaviour
         hasSpawned = true;
     }
 
-    void U_SpawnTwo()
-    {
-    }
-    void U_SpawnThree()
-    {
-    }
 
 
     private void Damage(EnemyHealth enemy)
