@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
-    public Transform player;              // Reference to the player's Transform
-    public float speed = 5f;              // Speed at which the enemy follows
-    public float stoppingDistance = 1.5f; // Distance to stop following to avoid collision
+    public Transform player;               // Reference to the player's Transform
+    public float speed = 5f;               // Speed at which the enemy follows
+    public float stoppingDistance = 1.5f;  // Distance to stop following to avoid collision
+    public Transform spriteTransform;      // Reference to the sprite's Transform (only this will rotate)
 
     void Awake()
     {
@@ -13,8 +14,6 @@ public class EnemyFollow : MonoBehaviour
         if (playerObject != null)
         {
             player = playerObject.transform;
-            
-            //Code 
         }
         else
         {
@@ -41,10 +40,17 @@ public class EnemyFollow : MonoBehaviour
 
             // Calculate the angle between the enemy's position and the player's position
             Vector3 difference = player.position - transform.position;
-            float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg - 90f; // Add 45 degrees
 
-            // Apply rotation only on the z-axis
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            // Apply rotation only to the spriteTransform's z-axis
+            if (spriteTransform != null)
+            {
+                spriteTransform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+            else
+            {
+                Debug.LogWarning("Sprite Transform not assigned in EnemyFollow.");
+            }
         }
     }
 }
