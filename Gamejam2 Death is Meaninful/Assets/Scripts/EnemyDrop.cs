@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDrop : MonoBehaviour
 {
-    public enum PowerUpType { SpeedBoost, Shield, ExtraLife, DamageBoost }
+
+    public Upgrade upgrade;
     public enum PowerUpState { GraveStoneState, HellState }
 
-    public PowerUpType powerUpType;           // Type of the power-up
     public PowerUpState powerUpState;         // Current state of the power-up
 
     public GameObject GraveStoneSprite;       // Reference to the GraveStone visual
@@ -19,12 +20,21 @@ public class EnemyDrop : MonoBehaviour
         // Ensure the power-up starts in GraveStoneState
         powerUpState = PowerUpState.GraveStoneState;
 
+        upgrade = GetRandomUpgrade();
+
         // Get the DamageArea and Collider components
         damageArea = GetComponent<DamageArea>();
         powerUpCollider = GetComponent<Collider2D>();
 
         // Initialize the correct visuals, effects, and collider based on GraveStoneState
         UpdatePowerUpState();
+    }
+
+    private Upgrade GetRandomUpgrade()
+    {
+         List<Upgrade> upgrades = GameManager.Instance.upgradesAvailiable;
+        int randomIndex = Random.Range(0, upgrades.Count);
+        return upgrades[randomIndex];
     }
 
     // Method to set the power-up's state and update visuals/effects
@@ -74,7 +84,7 @@ public class EnemyDrop : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>();
+        PlayerActions player = other.GetComponent<PlayerActions>();
         if (player != null)
         {
             player.PickUpPowerUp(this);

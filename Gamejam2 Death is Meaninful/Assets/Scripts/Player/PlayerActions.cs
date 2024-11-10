@@ -113,6 +113,8 @@ public class PlayerActions : MonoBehaviour
 
     public void Shoot()
     {
+        AudioManager.instance.Play("Cast");
+
         GameObject Spell = Instantiate(projectile, ShootSpawn.position, ShootSpawn.rotation);
 
         Spell.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;  // Adjust speed as needed
@@ -123,6 +125,7 @@ public class PlayerActions : MonoBehaviour
     public float shootingAngle = 20f;
     private void ShootTwo()
     {
+        AudioManager.instance.Play("Cast");
         //rotate the shootspawn by -45
         ShootSpawn.Rotate(0, 0, -shootingAngle);
         GameObject Spell1 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
@@ -136,7 +139,15 @@ public class PlayerActions : MonoBehaviour
     }
     private void ShootThree()
     {
+        AudioManager.instance.Play("Cast");
 
         Debug.Log("Shooting three");
     }
+
+    public void PickUpPowerUp(EnemyDrop enemyDrop)
+    {
+        upgrades.Add(enemyDrop.upgrade);  // Add the power-up to the list
+    }
+
+
 }

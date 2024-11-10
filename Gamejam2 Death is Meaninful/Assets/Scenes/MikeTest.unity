@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1529,7 +1529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2134,7 +2134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5660378, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6226415, g: 0, b: 0, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2193,6 +2193,12 @@ MonoBehaviour:
   player: {fileID: 280944456}
   cinemachineCamera: {fileID: 1112213753}
   sceneLight: {fileID: 619394801}
+  upgradesAvailiable:
+  - {fileID: 11400000, guid: b17e8395c2bf2b541a49fb522088b538, type: 2}
+  - {fileID: 11400000, guid: 41df6423e68caa241a7ee914db05a5dd, type: 2}
+  - {fileID: 11400000, guid: 2765dd6dc894c304896054e50a2594ff, type: 2}
+  - {fileID: 11400000, guid: de6b5fca771915549a5aadfb345600ff, type: 2}
+  - {fileID: 11400000, guid: 2067724b365cb86428b26ca337887170, type: 2}
 --- !u!4 &1430794565
 Transform:
   m_ObjectHideFlags: 0
@@ -3300,6 +3306,95 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1934914297}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6693684711608822334
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f2832186338a71e4280fe4b89949bc2f, type: 3}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[1].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 21c8e05cced31a646a1c797dde23b4bc, type: 3}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[2].name
+      value: ChangeHelheim
+      objectReference: {fileID: 0}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[2].pitch
+      value: 1.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[1].volume
+      value: 0.168
+      objectReference: {fileID: 0}
+    - target: {fileID: 148512301581903581, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 0.294
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332610570743427290, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.04690101
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.039069276
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.18594205
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806506150824331346, guid: 1ba96e97af861764bae76b6197122084, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ba96e97af861764bae76b6197122084, type: 3}
 --- !u!1001 &8017491235894006186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3377,9 +3472,17 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
-      propertyPath: upgrades.Array.size
-      value: 0
+      propertyPath: damage
+      value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: upgrades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568553964658821067, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
+      propertyPath: 'upgrades.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: de6b5fca771915549a5aadfb345600ff, type: 2}
     - target: {fileID: 8089996576712013497, guid: 6e2b0a52ccdf0d04e9ade71a43476a62, type: 3}
       propertyPath: damagePerSecond
       value: 2
@@ -3411,3 +3514,4 @@ SceneRoots:
   - {fileID: 1367617939}
   - {fileID: 1282855969}
   - {fileID: 349730874}
+  - {fileID: 6693684711608822334}

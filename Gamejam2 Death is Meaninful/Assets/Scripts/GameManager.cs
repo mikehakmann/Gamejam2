@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     private float originalCameraZoom = 4.67f;
 
+    public List<Upgrade> upgradesAvailiable = new List<Upgrade>();
+
     private void Awake()
     {
         Instance = this;

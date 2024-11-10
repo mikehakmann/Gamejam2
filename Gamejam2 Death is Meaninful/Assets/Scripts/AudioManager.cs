@@ -6,20 +6,11 @@ public class AudioManager : MonoBehaviour
    public Sound[] sounds;
     public static AudioManager instance;
     public AudioSource audioSource;
-    public AudioClip audioClip;
 
     private void Awake()
     {
-        if (instance == null)
-        {
             instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+       
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -31,7 +22,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        Play("Theme");
+        Play("Background");
     }
     public void Play(string name)
     {

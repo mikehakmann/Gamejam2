@@ -41,10 +41,5 @@ public class Player : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    // Method to handle power-up pickup
-    public void PickUpPowerUp(EnemyDrop enemyDrop)
-    {
-        pickedUpPowerUps.Add(enemyDrop);  // Add the power-up to the list
-        Debug.Log("Picked up power-up: " + enemyDrop.powerUpType);
-    }
+    
 }
