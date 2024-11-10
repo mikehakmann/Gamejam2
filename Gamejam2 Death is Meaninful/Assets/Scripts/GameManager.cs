@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using Unity.Cinemachine;
 
@@ -169,18 +170,11 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Helheims)
         {
             player.SetActive(true);
-
-            playerHealth.ToggleDamageOverTime(true);
-            
             EnemyDrop[] allPowerUps = FindObjectsOfType<EnemyDrop>();
             foreach (EnemyDrop powerUp in allPowerUps)
             {
                 powerUp.ChangeState();
             }
-
-
-
-            
             
 
             PlayerActions playerActions = player.GetComponent<PlayerActions>();
@@ -204,7 +198,6 @@ public class GameManager : MonoBehaviour
         
         ResumeMovement();
         
-        playerHealth.ToggleDamageOverTime(true);
     }
 
     private IEnumerator RotateWorld(GameState targetGameState)
