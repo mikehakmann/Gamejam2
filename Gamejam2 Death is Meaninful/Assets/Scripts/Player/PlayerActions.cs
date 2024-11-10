@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerActions : MonoBehaviour
@@ -5,8 +6,7 @@ public class PlayerActions : MonoBehaviour
     //singleton
     public static PlayerActions instance;
 
-
-    public Upgrade[] upgrades;
+    public List<Upgrade> upgrades = new List<Upgrade>();
 
     public GameObject projectile;
     public GameObject bigProjectile;
@@ -14,19 +14,34 @@ public class PlayerActions : MonoBehaviour
     private float distanceFromPlayer = 0.2f;
     public float projectileSpeed = 5f;
 
+    private float cooldownTime;
+    private float nextShootTime = 0f;
+
+    //upgradeable stats
+    public float damage = 1f;
+    public float speed = 5;
+    public float fireRate = 1;
+    public float maxHP = 100;
+
     void Start()
     {
         ShootSpawn = transform.Find("ShootSpawn");
         instance = this;
-
+        speed = GetComponent<Player>().moveSpeed;
+        cooldownTime = 1 / fireRate;
     }
 
     void Update()
     {
         MoveSpawnTowardsMouse();
 
-        if (Input.GetMouseButtonDown(0))
+        // Update cooldownTime based on current fireRate
+        cooldownTime = 1 / fireRate;
+
+        if (Input.GetMouseButtonDown(0) && Time.time >= nextShootTime)
         {
+            nextShootTime = Time.time + cooldownTime; // Set the time for the next shot
+
             foreach (var upgrade in upgrades)
             {
                 if (upgrade.name == "ShootTwo")
@@ -43,12 +58,42 @@ public class PlayerActions : MonoBehaviour
                 {
                     Shoot();
                     break;
-
                 }
             }
         }
     }
+    public void Upgrade(Upgrade upgrade)
+    {
+        // Add the upgrade to the list
+        upgrades.Add(upgrade);
 
+        // Update the player's stats based on the upgrade
+        UpdateUpgrades();
+    }
+
+    public void UpdateUpgrades()
+    {
+        foreach (var upgrade in upgrades)
+        {
+            if (upgrade.name == "Damage")
+            {
+                damage += 5;
+            }
+            else if (upgrade.name == "Speed")
+            {
+                speed += 1;
+            }
+            else if (upgrade.name == "FireRate")
+            {
+                fireRate += 0.2f;
+            }
+            else if (upgrade.name == "MaxHP")
+            {
+                maxHP += 10;
+            }
+
+        }
+    }
     private void MoveSpawnTowardsMouse()
     {
         // Get the mouse position in world coordinates
@@ -60,7 +105,7 @@ public class PlayerActions : MonoBehaviour
         ShootSpawn.position = transform.position + direction * distanceFromPlayer;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        ShootSpawn.rotation = Quaternion.Euler(0, 0, angle-90);
+        ShootSpawn.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     public void Shoot()
@@ -80,7 +125,7 @@ public class PlayerActions : MonoBehaviour
         GameObject Spell1 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
         Spell1.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
 
-        ShootSpawn.Rotate(0, 0, shootingAngle*2);
+        ShootSpawn.Rotate(0, 0, shootingAngle * 2);
         GameObject Spell2 = Instantiate(bigProjectile, ShootSpawn.position, ShootSpawn.rotation);
         Spell2.GetComponent<Rigidbody2D>().linearVelocity = ShootSpawn.up * projectileSpeed;
 

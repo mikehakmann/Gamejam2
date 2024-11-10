@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpellSplit : MonoBehaviour
 {
 
-    public float damage;
+    private float damage;
     public int pierce = 0;
     private PlayerActions player;
     private bool firstHitIgnored = false; // Track if the first enemy hit should be ignored
@@ -11,6 +11,7 @@ public class SpellSplit : MonoBehaviour
     private void Start()
     {
         player = PlayerActions.instance;
+        damage = player.GetComponent<PlayerActions>().damage /2;
         Destroy(gameObject, 4);
         if (player != null)
         {
