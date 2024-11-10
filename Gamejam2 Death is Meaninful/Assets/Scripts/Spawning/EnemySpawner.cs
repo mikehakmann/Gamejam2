@@ -52,6 +52,9 @@ public class EnemySpawner : MonoBehaviour
         Vector3 screenPosition = new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), mainCamera.nearClipPlane);
         Vector3 spawnPosition = mainCamera.ScreenToWorldPoint(screenPosition);
 
+        // Set the z-position to 0 to ensure the enemy spawns at the correct depth
+        spawnPosition.z = 0f;
+
         // Spawn the enemy and increment the count
         Instantiate(prefab, spawnPosition, Quaternion.identity);
         currentCount++;

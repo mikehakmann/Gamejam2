@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 0.043137252, g: 1, b: 0.93383414, a: 1}
   m_FlipX: 0
@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: onDeathSpawnPrefab
       value: 
       objectReference: {fileID: 1664685119702501083, guid: 25637e0743a1565428934e378825c7ac, type: 3}
+    - target: {fileID: 7838437977008211758, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -176,8 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84797abe56bd9194eb8b5062c669e45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleSpeed: 0.5
-  runAwaySpeed: 2
+  idleSpeed: 0.6
+  runAwaySpeed: 1
   runDistance: 1.36
   runDuration: 1
   idleDuration: 2
