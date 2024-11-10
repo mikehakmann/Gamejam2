@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8456183402289780400}
   - component: {fileID: 8541785662303561813}
   m_Layer: 6
-  m_Name: Triangle
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,9 +135,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 825592978893046031, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_Radius
+      value: 0.13
+      objectReference: {fileID: 0}
     - target: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: m_Name
       value: EnemyCharge
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660469705278584457, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660469705278584457, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7838437977008211758, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: m_SortingOrder
@@ -153,6 +169,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       insertIndex: -1
       addedObject: {fileID: 742622533623352386}
+    - targetCorrespondingSourceObject: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7041910534594183161}
+    - targetCorrespondingSourceObject: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 420493897507482599}
   m_SourcePrefab: {fileID: 100100000, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
 --- !u!1 &1060384820295281778 stripped
 GameObject:
@@ -175,6 +197,45 @@ MonoBehaviour:
   speed: 1
   stoppingDistance: 0.5
   spriteTransform: {fileID: 8456183402289780400}
+--- !u!114 &7041910534594183161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060384820295281778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 008a364ba9e186344abb01869f161f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damagePerSecond: 5
+  damageRadius: 0.24
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!95 &420493897507482599
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060384820295281778}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d99abeebca65624a82bc0401ac96c43, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &2222485324150902705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 650319107878716491, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}

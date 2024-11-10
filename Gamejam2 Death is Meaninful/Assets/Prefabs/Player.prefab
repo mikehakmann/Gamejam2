@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8466433338110858626}
   - component: {fileID: 5202655997654498844}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6045135319797105537}
   - component: {fileID: 1678127381784203659}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6158326261477065260}
   - component: {fileID: 4876475957810191717}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 8089996576712013497}
   - component: {fileID: 6232587131180194930}
   - component: {fileID: 2802937713138678641}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}

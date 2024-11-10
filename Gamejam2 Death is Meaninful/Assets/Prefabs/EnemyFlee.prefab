@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 361130024282029184}
   - component: {fileID: 294085738100607540}
   m_Layer: 6
-  m_Name: Triangle
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,14 +135,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 825592978893046031, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_Radius
+      value: 0.13
+      objectReference: {fileID: 0}
     - target: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: m_Name
       value: EnemyFlee
       objectReference: {fileID: 0}
     - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: maxHealth
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: onDeathSpawnPrefab
       value: 
       objectReference: {fileID: 1664685119702501083, guid: 25637e0743a1565428934e378825c7ac, type: 3}
+    - target: {fileID: 5660469705278584457, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5660469705278584457, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7838437977008211758, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: m_SortingOrder
       value: 1

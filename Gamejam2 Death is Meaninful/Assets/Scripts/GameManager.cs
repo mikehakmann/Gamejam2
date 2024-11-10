@@ -18,16 +18,12 @@ public class GameManager : MonoBehaviour
     public GameObject world;
     public GameObject player;
 
-    public CinemachineCamera cinemachineCamera; // Change Camera to CinemachineVirtualCamera
+    public CinemachineCamera cinemachineCamera; // Using CinemachineCamera as specified
     public Light2D sceneLight;
     private Color midgardLightColor = Color.white;
     private Color helheimsLightColor = Color.gray * 0.3f;
 
     private float originalCameraZoom = 2.83f;
-
-    private List<EnemyHealth> enemiesInScene = new List<EnemyHealth>();  // List to keep track of enemies
-
-
 
     private void Awake()
     {
@@ -37,14 +33,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameState = GameState.Midgard;
-        CacheEnemiesInScene();  // Store references to all enemies in the scene at the start
-    }
-
-    private void CacheEnemiesInScene()
-    {
-        // Find all objects with EnemyHealth in the current scene and add to list
-        enemiesInScene.Clear();
-        enemiesInScene.AddRange(FindObjectsOfType<EnemyHealth>());
     }
 
     [ContextMenu("ChangeGameState")]
@@ -55,24 +43,65 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Helheims;
             Debug.Log("Changing gamestate to " + gameState);
             StartCoroutine(ChangeWorld(GameState.Helheims));
-            ToggleEnemies(false);  // Disable all enemies
         }
         else
         {
             gameState = GameState.Midgard;
             Debug.Log("Changing gamestate to " + gameState);
             StartCoroutine(ChangeWorld(GameState.Midgard));
-            ToggleEnemies(true);  // Enable all enemies
         }
+
+        PlayFlyUpOnAllTargets();  // Play "FlyUp" animation on all relevant objects
     }
 
-    private void ToggleEnemies(bool enable)
+    private void PlayFlyUpOnAllTargets()
     {
-        foreach (var enemy in enemiesInScene)
+        // Get all GameObjects with TeleportToMidgaard and EnemyDrop components
+        TeleportToMidgaard[] teleporters = FindObjectsOfType<TeleportToMidgaard>();
+        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
+
+        // Play "FlyUp" animation on all relevant objects with an Animator
+        foreach (var teleporter in teleporters)
         {
-            if (enemy != null)
+            Animator animator = teleporter.GetComponent<Animator>();
+            if (animator != null)
             {
-                enemy.gameObject.SetActive(enable);  // Enable or disable enemy GameObjects
+                animator.Play("FlyUp");
+            }
+        }
+
+        foreach (var enemy in enemies)
+        {
+            Animator animator = enemy.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("FlyUp");
+            }
+        }
+    }
+    
+    private void PlayFlyUpDownAllTargets()
+    {
+        // Get all GameObjects with TeleportToMidgaard and EnemyDrop components
+        TeleportToMidgaard[] teleporters = FindObjectsOfType<TeleportToMidgaard>();
+        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
+
+        // Play "FlyDown" animation on all relevant objects with an Animator
+        foreach (var teleporter in teleporters)
+        {
+            Animator animator = teleporter.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("FlyDown");
+            }
+        }
+
+        foreach (var enemy in enemies)
+        {
+            Animator animator = enemy.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("FlyDown");
             }
         }
     }
@@ -88,7 +117,7 @@ public class GameManager : MonoBehaviour
         // Zoom out fully before rotating
         float targetZoom = 30f;
         float zoomSpeed = 4f;
-        //ZOOM ------------------------------------------------------------
+        
         Debug.Log("Zooming out");
         while (Mathf.Abs(cinemachineCamera.Lens.OrthographicSize - targetZoom) > 0.05f)
         {
@@ -97,16 +126,13 @@ public class GameManager : MonoBehaviour
         }
         cinemachineCamera.Lens.OrthographicSize = targetZoom; // Snap to the exact target zoom
         Debug.LogWarning("Zooming out complete");
-        //------------------------------------------------------------------
-        // Start rotation after fully zooming out
-        yield return RotateWorld(targetGameState);  // Wait for rotation to complete
 
+        yield return RotateWorld(targetGameState);
 
-        // lIGHT ----------------------------------------------------------
         Debug.Log("Changing light color");
         Color targetColor = targetGameState == GameState.Helheims ? helheimsLightColor : midgardLightColor;
         float colorTransitionSpeed = 4f;
-        float colorTolerance = 0.01f; // Margin for color difference
+        float colorTolerance = 0.01f;
 
         while (Vector3.Distance(new Vector3(sceneLight.color.r, sceneLight.color.g, sceneLight.color.b),
                                 new Vector3(targetColor.r, targetColor.g, targetColor.b)) > colorTolerance)
@@ -114,10 +140,7 @@ public class GameManager : MonoBehaviour
             sceneLight.color = Color.Lerp(sceneLight.color, targetColor, Time.deltaTime * colorTransitionSpeed);
             yield return null;
         }
-        sceneLight.color = targetColor; // Snap to the exact target color
-
-        //------------------------------------------------------------------
-        // Zoom in after rotating and changing light color
+        sceneLight.color = targetColor;
 
         Debug.Log("Zooming in");
         while (Mathf.Abs(cinemachineCamera.Lens.OrthographicSize - originalCameraZoom) > 0.05f)
@@ -125,28 +148,25 @@ public class GameManager : MonoBehaviour
             cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, originalCameraZoom, Time.deltaTime * zoomSpeed);
             yield return null;
         }
-        cinemachineCamera.Lens.OrthographicSize = originalCameraZoom; // Snap to the exact original zoom
+        cinemachineCamera.Lens.OrthographicSize = originalCameraZoom;
 
         player.GetComponent<Animator>().Play("FlyDown");
+        PlayFlyUpDownAllTargets();
         yield return new WaitForSeconds(0.45f);
         CameraManager.Instance.Shake();
         ResumeMovement();
-        //------------------------------------------------------------------
 
-
-
-        if (gameState == GameState.Midgard)
-        {
-            gameState = GameState.Helheims;
-            Debug.Log("Changing gamestate to " + gameState);
-        }
-        else
-        {
-            gameState = GameState.Midgard;
-            Debug.Log("Changing gamestate to " + gameState);
-        }
+        ChangeStateOnAllEnemyDrops();  // Change state on all EnemyDrops after ResumeMovement
     }
 
+    private void ChangeStateOnAllEnemyDrops()
+    {
+        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
+        foreach (var enemy in enemies)
+        {
+            enemy.ChangeState();
+        }
+    }
 
     private IEnumerator RotateWorld(GameState targetGameState)
     {

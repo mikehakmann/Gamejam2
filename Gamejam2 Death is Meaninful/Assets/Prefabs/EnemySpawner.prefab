@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 0}
+  enemySpawnInterval: 0.5
+  maxEnemyCount: 80
+  runAwayEnemyPrefab: {fileID: 0}
+  runAwaySpawnInterval: 0.2
+  maxRunAwayCount: 1
   mainCamera: {fileID: 0}
-  spawnInterval: 2
-  maxEnemies: 10
