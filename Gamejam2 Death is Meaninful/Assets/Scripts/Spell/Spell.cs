@@ -43,7 +43,7 @@ public class Spell : MonoBehaviour
 
             if(pierce <= 0)
             {
-                Damage(collision.gameObject.GetComponent<EnemyHealth>());
+                Damage(collision.gameObject.GetComponentInParent<EnemyHealth>());
                 Destroy(gameObject);
             }
             else
@@ -90,7 +90,7 @@ public class Spell : MonoBehaviour
     private void Damage(EnemyHealth enemy)
     {
 
-        if (enemy == null)
+        if (enemy != null)
         enemy.TakeDamage(damage);
     }
 
