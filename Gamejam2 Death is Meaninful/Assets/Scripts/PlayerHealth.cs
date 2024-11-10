@@ -10,7 +10,8 @@ public class PlayerHealth : MonoBehaviour
     public float damagePerSecond = 5f;           // Amount of damage taken per second
     private Image healthBar;                     // Reference to the health bar image
     private Animator hpAnim;                     // Reference to the health bar animator
-    private Coroutine damageOverTimeCoroutine;   // Reference to continuous damage coroutine
+    private float nextDamageTime = 0f;           // Time when next damage is allowed
+    private bool isDamageOverTimeActive = false; // Flag to control damage over time
 
     void Start()
     {
@@ -31,6 +32,13 @@ public class PlayerHealth : MonoBehaviour
             TakeDamage(20);
         }
 
+        // Apply damage over time if active
+        if (isDamageOverTimeActive && Time.time >= nextDamageTime && currentHealth > 0)
+        {
+            TakeDamage(5);  // Apply 5 damage
+            nextDamageTime = Time.time + 1f;  // Schedule the next damage after 1 second
+        }
+
         // Update the health bar fill amount based on the current health
         healthBar.fillAmount = currentHealth / maxHealth;
     }
@@ -38,23 +46,6 @@ public class PlayerHealth : MonoBehaviour
     public void SetHealth(float health)
     {
         currentHealth = health;
-    }
-
-    public IEnumerator DamageOverTime()
-    {
-        Debug.Log("DamageOverTime coroutine started.");
-        while (currentHealth > 0)
-        {
-            currentHealth -= damagePerSecond * Time.deltaTime;
-
-            if (currentHealth <= 0 && gameObject.activeSelf) // Only call Kill if player is still active
-            {
-                Kill();
-                break;
-            }
-            yield return null;  // Wait until the next frame
-        }
-        Debug.Log("DamageOverTime coroutine ended.");
     }
 
     public void TakeDamage(float amount)
@@ -68,36 +59,18 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Function to start or stop the DamageOverTime coroutine
+    // Enable or disable the damage over time effect
     public void ToggleDamageOverTime(bool enable)
     {
+        isDamageOverTimeActive = enable;
         if (enable)
         {
-            
-            // Start the DamageOverTime coroutine if it's not already running
-            if (damageOverTimeCoroutine == null)
-            {
-                Debug.Log("Starting DamageOverTime coroutine.");
-                damageOverTimeCoroutine = StartCoroutine(DamageOverTime());
-            }
-            else
-            {
-                Debug.Log("DamageOverTime coroutine is already running.");
-            }
+            Debug.Log("Damage over time activated.");
+            nextDamageTime = Time.time + 1f; // Start the timer for the next damage in 1 second
         }
         else
         {
-            // Stop the DamageOverTime coroutine if it's currently running
-            if (damageOverTimeCoroutine != null)
-            {
-                Debug.Log("Stopping DamageOverTime coroutine.");
-                StopCoroutine(damageOverTimeCoroutine);
-                damageOverTimeCoroutine = null;
-            }
-            else
-            {
-                Debug.Log("DamageOverTime coroutine is not running.");
-            }
+            Debug.Log("Damage over time deactivated.");
         }
     }
 
@@ -107,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Player has died!");
 
-        // Stop continuous damage when the player dies
+        // Stop all continuous damage when the player dies
         ToggleDamageOverTime(false);
 
         // Spawn the teleporter at the player's current position
