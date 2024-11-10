@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DamageAreaCircleCast : MonoBehaviour
 {
-    public float damagePerSecond = 10f;      // Damage per second
+    public float damageAmount = 20f;         // Fixed amount of damage dealt each time the player is hit
     public float damageRadius = 5f;          // Radius for the circle cast
     public LayerMask playerLayer;            // Layer mask to identify the player
 
@@ -21,7 +21,7 @@ public class DamageAreaCircleCast : MonoBehaviour
         {
             PlayerHealth detectedPlayerHealth = hit.collider.GetComponent<PlayerHealth>();
 
-            // Start damaging if the player enters the range
+            // Start damaging if the player enters the range and isn't already being damaged
             if (detectedPlayerHealth != null && detectedPlayerHealth != playerHealth)
             {
                 playerHealth = detectedPlayerHealth;
@@ -30,7 +30,7 @@ public class DamageAreaCircleCast : MonoBehaviour
                 // Start the damage coroutine if it isn't already running
                 if (damageCoroutine == null)
                 {
-                    damageCoroutine = StartCoroutine(DamagePlayerOverTime());
+                    damageCoroutine = StartCoroutine(DamagePlayerOnHit());
                 }
             }
         }
@@ -49,13 +49,16 @@ public class DamageAreaCircleCast : MonoBehaviour
         }
     }
 
-    // Coroutine to damage the player over time
-    private IEnumerator DamagePlayerOverTime()
+    // Coroutine to apply a fixed amount of damage each time the player is within range
+    private IEnumerator DamagePlayerOnHit()
     {
         while (playerInRange && playerHealth != null)
         {
-            playerHealth.TakeDamage(damagePerSecond * Time.deltaTime);  // Apply damage per second
-            yield return null;  // Wait until the next frame
+            // Deal a fixed damage amount to the player
+            playerHealth.TakeDamage(damageAmount);
+
+            // Wait for a cooldown period (e.g., 1 second) before potentially hitting again
+            yield return new WaitForSeconds(1f); // Adjust this delay as needed
         }
 
         // Reset the coroutine reference when it finishes

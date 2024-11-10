@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering.Universal;
+using Unity.Cinemachine;
 
 public enum GameState
 {
@@ -17,14 +16,16 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
     public GameObject world;
     public GameObject player;
-
-    private Animator HpBarAnim;
-    public CinemachineCamera cinemachineCamera; // Using CinemachineCamera as specified
+    public GameObject EnemySpawner;
+    
+    public CinemachineCamera cinemachineCamera;  // Using CinemachineCamera as specified
     public Light2D sceneLight;
     private Color midgardLightColor = Color.white;
     private Color helheimsLightColor = Color.gray * 0.3f;
 
-    private float originalCameraZoom = 4.67f;
+    private float originalCameraZoom;
+    
+    public PlayerHealth playerHealth;
 
     public List<Upgrade> upgradesAvailiable = new List<Upgrade>();
 
@@ -33,92 +34,79 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    public int timesKilled = 0;
+
     void Start()
     {
+        originalCameraZoom = cinemachineCamera.Lens.OrthographicSize;
         gameState = GameState.Midgard;
-        HpBarAnim = GameObject.Find("Hp").GetComponent<Animator>();
+        
+        player = GameObject.Find("Player");
+        
+        playerHealth  = player.GetComponent<PlayerHealth>();
+        
     }
 
     [ContextMenu("ChangeGameState")]
     public void ChangeGameState()
     {
+        DestroyAllEnemyHealthObjects();
+
         if (gameState == GameState.Midgard)
         {
             gameState = GameState.Helheims;
-            Debug.Log("Changing gamestate to " + gameState);
+            EnemySpawner.SetActive(false);
             StartCoroutine(ChangeWorld(GameState.Helheims));
         }
         else
         {
             gameState = GameState.Midgard;
-            Debug.Log("Changing gamestate to " + gameState);
+            EnemyDrop[] allEnemiesDrops = FindObjectsOfType<EnemyDrop>();
+            foreach (EnemyDrop enemyDrop in allEnemiesDrops)
+            {
+                Destroy(enemyDrop.gameObject);
+            }
+            EnemySpawner.SetActive(false);
             StartCoroutine(ChangeWorld(GameState.Midgard));
         }
-
-        PlayFlyUpOnAllTargets();  // Play "FlyUp" animation on all relevant objects
+        
+        Debug.Log("Changing gamestate to " + gameState);
     }
 
-    private void PlayFlyUpOnAllTargets()
+    private void DestroyAllEnemyHealthObjects()
     {
-        // Get all GameObjects with TeleportToMidgaard and EnemyDrop components
-        TeleportToMidgaard[] teleporters = FindObjectsOfType<TeleportToMidgaard>();
-        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
-
-        // Play "FlyUp" animation on all relevant objects with an Animator
-        foreach (var teleporter in teleporters)
+        EnemyHealth[] allEnemies = FindObjectsOfType<EnemyHealth>();
+        foreach (EnemyHealth enemy in allEnemies)
         {
-            Animator animator = teleporter.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.Play("FlyUp");
-            }
-        }
-
-        foreach (var enemy in enemies)
-        {
-            Animator animator = enemy.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.Play("FlyUp");
-            }
-        }
-    }
-    
-    private void PlayFlyUpDownAllTargets()
-    {
-        // Get all GameObjects with TeleportToMidgaard and EnemyDrop components
-        TeleportToMidgaard[] teleporters = FindObjectsOfType<TeleportToMidgaard>();
-        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
-
-        // Play "FlyDown" animation on all relevant objects with an Animator
-        foreach (var teleporter in teleporters)
-        {
-            Animator animator = teleporter.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.Play("FlyDown");
-            }
-        }
-
-        foreach (var enemy in enemies)
-        {
-            Animator animator = enemy.GetComponent<Animator>();
-            if (animator != null)
-            {
-                animator.Play("FlyDown");
-            }
+            Destroy(enemy.gameObject);
         }
     }
 
     private IEnumerator ChangeWorld(GameState targetGameState)
     {
         Debug.Log("Changing world to " + targetGameState);
-        // Start fly-up animation
+        
         player.GetComponent<Animator>().Play("FlyUp");
+        
+        EnemyDrop[] allEnemiesDrops = FindObjectsOfType<EnemyDrop>();
+        foreach (EnemyDrop enemyDrop in allEnemiesDrops)
+        {
+            enemyDrop.gameObject.GetComponent<Animator>().Play("FlyUp");
+        }
+        
+        TeleportToMidgaard[] allTeleporters = FindObjectsOfType<TeleportToMidgaard>();
+        foreach (TeleportToMidgaard teleporter in allTeleporters)
+        {
+            Animator animator = teleporter.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.Play("FlyUp");
+            }
+        }
+        
         LockMovement();
         yield return new WaitForSeconds(1);
 
-        // Zoom out fully before rotating
         float targetZoom = 30f;
         float zoomSpeed = 4f;
         
@@ -128,7 +116,7 @@ public class GameManager : MonoBehaviour
             cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, targetZoom, Time.deltaTime * zoomSpeed);
             yield return null;
         }
-        cinemachineCamera.Lens.OrthographicSize = targetZoom; // Snap to the exact target zoom
+        cinemachineCamera.Lens.OrthographicSize = targetZoom;
         Debug.LogWarning("Zooming out complete");
 
         yield return RotateWorld(targetGameState);
@@ -155,30 +143,68 @@ public class GameManager : MonoBehaviour
         cinemachineCamera.Lens.OrthographicSize = originalCameraZoom;
 
         player.GetComponent<Animator>().Play("FlyDown");
-        PlayFlyUpDownAllTargets();
+        
+        foreach (EnemyDrop enemyDrop in allEnemiesDrops)
+        {
+            if (enemyDrop == null)
+            {
+                continue;
+            }
+            enemyDrop.gameObject.GetComponent<Animator>().Play("FlyDown");
+        }
+        
+        foreach (TeleportToMidgaard teleporter in allTeleporters)
+        {
+            if (teleporter == null)
+            {
+                continue;
+            }
+            teleporter.gameObject.GetComponent<Animator>().Play("FlyDown");
+        }
+        
         yield return new WaitForSeconds(0.45f);
         CameraManager.Instance.Shake();
+        
+        // Start the DamageOverTime coroutine at "/Here"
+        if (gameState == GameState.Helheims)
+        {
+            player.SetActive(true);
 
-        if(targetGameState == GameState.Helheims)
-        {
-        HpBarAnim.Play("HelheimTimer");
+            playerHealth.ToggleDamageOverTime(true);
+            
+            EnemyDrop[] allPowerUps = FindObjectsOfType<EnemyDrop>();
+            foreach (EnemyDrop powerUp in allPowerUps)
+            {
+                powerUp.ChangeState();
+            }
+
+
+
+            
+            
+
+            PlayerActions playerActions = player.GetComponent<PlayerActions>();
+            if (playerHealth != null && playerActions != null)
+            {
+                playerHealth.SetHealth(playerActions.maxHP);
+            }
+            
         }
-        else
+        
+        
+        
+        if (gameState == GameState.Midgard)
         {
-         HpBarAnim.Play("MidgardTimer");
+            playerHealth.ToggleDamageOverTime(true);
         }
+        
+        
+        
+        
+        
         ResumeMovement();
-
-        ChangeStateOnAllEnemyDrops();  // Change state on all EnemyDrops after ResumeMovement
-    }
-
-    private void ChangeStateOnAllEnemyDrops()
-    {
-        EnemyDrop[] enemies = FindObjectsOfType<EnemyDrop>();
-        foreach (var enemy in enemies)
-        {
-            enemy.ChangeState();
-        }
+        
+        playerHealth.ToggleDamageOverTime(true);
     }
 
     private IEnumerator RotateWorld(GameState targetGameState)
@@ -207,6 +233,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Rotation complete");
     }
+    
 
     public void LockMovement()
     {

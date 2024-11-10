@@ -50,9 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpType: 0
-  powerUpState: 1
+  powerUpState: 0
   GraveStoneSprite: {fileID: 8372121616856901467}
   HellStateSprite: {fileID: 2723958990475994494}
+  canBePickedUp: 1
 --- !u!58 &694755412956172350
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664685119702501083}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -127,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1209831567186234795
 Transform:
   m_ObjectHideFlags: 0

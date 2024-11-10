@@ -143,9 +143,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyCharge
       objectReference: {fileID: 0}
+    - target: {fileID: 1830292173248046984, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: maxHealth
-      value: 5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
+      propertyPath: damageAmount
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5660469705278584457, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: m_LocalPosition.x
@@ -194,8 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 1
-  stoppingDistance: 0.5
+  speed: 1.6
+  stoppingDistance: 0.3
   spriteTransform: {fileID: 8456183402289780400}
 --- !u!114 &7041910534594183161
 MonoBehaviour:
@@ -209,8 +217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 008a364ba9e186344abb01869f161f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 5
-  damageRadius: 0.24
+  damageAmount: 10
+  damageRadius: 0.05
   playerLayer:
     serializedVersion: 2
     m_Bits: 128

@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: maxHealth
-      value: 40
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1911690810177157903, guid: cc360a01eb09a8d42baa84e6617f6b64, type: 3}
       propertyPath: onDeathSpawnPrefab
@@ -196,9 +196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84797abe56bd9194eb8b5062c669e45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleSpeed: 0.6
-  runAwaySpeed: 1
-  runDistance: 1.36
+  idleSpeed: 1.2
+  runAwaySpeed: 1.8
+  runDistance: 1.88
   runDuration: 1
   idleDuration: 2
   moveToCenterDuration: 1
