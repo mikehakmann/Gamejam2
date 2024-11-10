@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDrop : MonoBehaviour
@@ -14,17 +15,13 @@ public class EnemyDrop : MonoBehaviour
     private DamageArea damageArea;            // Reference to the DamageArea component
     private Collider2D powerUpCollider;       // Reference to the Collider component
 
+    public bool canBePickedUp = false;         // Flag to check if the power-up can be picked up
+
     private void Start()
     {
-        // Ensure the power-up starts in GraveStoneState
-        powerUpState = PowerUpState.GraveStoneState;
-
-        // Get the DamageArea and Collider components
         damageArea = GetComponent<DamageArea>();
         powerUpCollider = GetComponent<Collider2D>();
 
-        // Initialize the correct visuals, effects, and collider based on GraveStoneState
-        UpdatePowerUpState();
     }
 
     // Method to set the power-up's state and update visuals/effects
@@ -74,6 +71,7 @@ public class EnemyDrop : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(canBePickedUp == false) return;
         Player player = other.GetComponent<Player>();
         if (player != null)
         {

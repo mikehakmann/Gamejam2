@@ -10,16 +10,13 @@ public class PlayerHealth : MonoBehaviour
     public float damagePerSecond = 5f;           // Amount of damage taken per second
     private Image healthBar;                     // Reference to the health bar image
     private Animator hpAnim;                     // Reference to the health bar animator
-    private Coroutine damageOverTimeCoroutine;   // Coroutine for continuous damage
+    private Coroutine damageOverTimeCoroutine;   // Reference to continuous damage coroutine
 
     void Start()
     {
         currentHealth = maxHealth;
         healthBar = GameObject.Find("HpMiddle").GetComponent<Image>();
         hpAnim = GameObject.Find("Hp").GetComponent<Animator>();
-
-        // Start the continuous damage coroutine
-        damageOverTimeCoroutine = StartCoroutine(DamageOverTime());
     }
 
     void Update()
@@ -37,9 +34,15 @@ public class PlayerHealth : MonoBehaviour
         // Update the health bar fill amount based on the current health
         healthBar.fillAmount = currentHealth / maxHealth;
     }
-
-    private IEnumerator DamageOverTime()
+    
+    public void SetHealth(float health)
     {
+        currentHealth = health;
+    }
+
+    public IEnumerator DamageOverTime()
+    {
+        Debug.Log("DamageOverTime coroutine started.");
         while (currentHealth > 0)
         {
             currentHealth -= damagePerSecond * Time.deltaTime;
@@ -47,9 +50,11 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth <= 0 && gameObject.activeSelf) // Only call Kill if player is still active
             {
                 Kill();
+                break;
             }
             yield return null;  // Wait until the next frame
         }
+        Debug.Log("DamageOverTime coroutine ended.");
     }
 
     public void TakeDamage(float amount)
@@ -63,15 +68,47 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // Function to start or stop the DamageOverTime coroutine
+    public void ToggleDamageOverTime(bool enable)
+    {
+        if (enable)
+        {
+            
+            // Start the DamageOverTime coroutine if it's not already running
+            if (damageOverTimeCoroutine == null)
+            {
+                Debug.Log("Starting DamageOverTime coroutine.");
+                damageOverTimeCoroutine = StartCoroutine(DamageOverTime());
+            }
+            else
+            {
+                Debug.Log("DamageOverTime coroutine is already running.");
+            }
+        }
+        else
+        {
+            // Stop the DamageOverTime coroutine if it's currently running
+            if (damageOverTimeCoroutine != null)
+            {
+                Debug.Log("Stopping DamageOverTime coroutine.");
+                StopCoroutine(damageOverTimeCoroutine);
+                damageOverTimeCoroutine = null;
+            }
+            else
+            {
+                Debug.Log("DamageOverTime coroutine is not running.");
+            }
+        }
+    }
+
     void Kill()
     {
+        GameManager.Instance.ChangeGameState();  // Change the game state when the player dies
+
         Debug.Log("Player has died!");
-        
+
         // Stop continuous damage when the player dies
-        if (damageOverTimeCoroutine != null)
-        {
-            StopCoroutine(damageOverTimeCoroutine);
-        }
+        ToggleDamageOverTime(false);
 
         // Spawn the teleporter at the player's current position
         if (teleporterPrefab != null)
@@ -81,16 +118,6 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             Debug.LogWarning("Teleporter prefab is not assigned!");
-        }
-
-        // Disable the player GameObject
-        gameObject.SetActive(false);
-
-        // Find all PowerUp objects in the scene and change their state
-        EnemyDrop[] allPowerUps = FindObjectsOfType<EnemyDrop>();
-        foreach (EnemyDrop powerUp in allPowerUps)
-        {
-            powerUp.ChangeState();
         }
     }
 }

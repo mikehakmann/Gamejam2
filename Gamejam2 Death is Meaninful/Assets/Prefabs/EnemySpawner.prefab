@@ -49,5 +49,5 @@ MonoBehaviour:
   maxEnemyCount: 80
   runAwayEnemyPrefab: {fileID: 0}
   runAwaySpawnInterval: 0.2
-  maxRunAwayCount: 1
+  maxRunAwayCount: 3
   mainCamera: {fileID: 0}

@@ -1,40 +1,36 @@
 using UnityEngine;
-using System.Collections;  // Needed for IEnumerator
+using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
 public class DamageArea : MonoBehaviour
 {
-    public float damagePerSecond = 10f;  // Damage per second
-    private bool playerInRange = false;  // Flag to check if the player is within range
-    private PlayerHealth playerHealth;   // Reference to the player's health script
+    public float damageAmount = 20f;           // Damage amount per interval
+    public float damageInterval = 1f;          // Interval (in seconds) between each damage tick
+    private float nextDamageTime = 0f;         // Timestamp for the next allowed damage
+    private PlayerHealth playerHealth;         // Reference to the player's health script
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        // Check if the object entering the trigger has a PlayerHealth component
-        playerHealth = other.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
+        // Check if the object in the trigger area has a PlayerHealth component
+        if (playerHealth == null)
         {
-            playerInRange = true;  // Set the flag to true if the player enters
-            StartCoroutine(DamagePlayerOverTime());
+            playerHealth = other.GetComponent<PlayerHealth>();
+        }
+
+        // If a player is detected and the damage interval has passed
+        if (playerHealth != null && Time.time >= nextDamageTime)
+        {
+            playerHealth.TakeDamage(damageAmount);   // Apply damage
+            nextDamageTime = Time.time + damageInterval;   // Set next damage time
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        // Check if the object exiting the trigger has the same PlayerHealth component
+        // Clear player reference if they leave the area
         if (other.GetComponent<PlayerHealth>() == playerHealth)
         {
-            playerInRange = false;  // Set the flag to false when the player leaves
-        }
-    }
-
-    // Coroutine to damage the player over time
-    private IEnumerator DamagePlayerOverTime()
-    {
-        while (playerInRange && playerHealth != null)
-        {
-            playerHealth.TakeDamage(damagePerSecond * Time.deltaTime);  // Apply damage per second
-            yield return null;  // Wait until the next frame
+            playerHealth = null;
         }
     }
 }
