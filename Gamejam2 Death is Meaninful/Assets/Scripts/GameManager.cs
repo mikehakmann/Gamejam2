@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         
         playerHealth  = player.GetComponent<PlayerHealth>();
         
+        playerHealth.ToggleDamageOverTime(true);
+        
     }
 
     [ContextMenu("ChangeGameState")]
@@ -58,6 +60,9 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Helheims;
             EnemySpawner.SetActive(false);
             StartCoroutine(ChangeWorld(GameState.Helheims));
+            
+            playerHealth.ToggleDamageOverTime(true);
+            
         }
         else
         {
@@ -69,6 +74,12 @@ public class GameManager : MonoBehaviour
             }
             EnemySpawner.SetActive(false);
             StartCoroutine(ChangeWorld(GameState.Midgard));
+            
+            
+            playerHealth.ToggleDamageOverTime(false);
+
+            
+            
         }
         
         Debug.Log("Changing gamestate to " + gameState);
